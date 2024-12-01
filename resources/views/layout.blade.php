@@ -13,11 +13,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.2/feather.min.js"
         integrity="sha512-zMm7+ZQ8AZr1r3W8Z8lDATkH05QG5Gm2xc6MlsCdBz9l6oE8Y7IXByMgSm/rdRQrhuHt99HAYfMljBOEZ68q5A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href={{ asset('css/styles.css') }}>
     <title>{{ $title ?? 'Job Mosaic | Get Your Dream Job' }}</title>
 </head>
 
 <body class="bg-gray-300">
     <x-header />
+    @if (request()->is('/'))
+        <x-hero />
+    @endif
     <main class="container mx-auto p-4 mt-4">
         {{ $slot }}
     </main>
