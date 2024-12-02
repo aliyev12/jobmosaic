@@ -15,7 +15,15 @@
         @apply flex px-4 py-2 hover:text-indigo-300 transition duration-300;
     }
 
+    .button {
+        @apply px-4 pr-5 py-2 rounded hover:shadow-md transition duration-300 flex items-center;
+    }
+
     .button.primary {
-        @apply bg-indigo-700 hover:bg-indigo-800 text-white px-4  py-2 rounded hover:shadow-md transition duration-300 flex items-center;
+        @apply bg-indigo-700 hover:bg-indigo-800 text-white;
+    }
+
+    .button.secondary {
+        @apply bg-gray-300 hover:bg-gray-400 text-slate-900;
     }
 }

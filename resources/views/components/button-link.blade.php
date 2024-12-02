@@ -5,10 +5,14 @@
     'hoverClass' => 'bg-indigo-800',
     'textClass' => 'text-white',
     'mobile' => null,
+    'variant' => null,
 ])
 
-<a href={{ url($url) }}
-    class="{{ $bgClass }} hover:{{ $hoverClass }} {{ $textClass }} px-4 pr-5 py-2 rounded hover:shadow-md transition duration-300 flex {{ $mobile ? 'w-fit' : '' }}">
+@php
+    $variantClasses = $variant ? $variant : " $bgClass hover:$hoverClass $textClass ";
+@endphp
+
+<a href={{ url($url) }} class="button {{ $variantClasses }} {{ $mobile ? 'w-fit' : '' }}">
     @if ($icon)
         <i class="mr-2" data-feather="{{ $icon }}"></i>
     @endif
