@@ -18,7 +18,7 @@ return [
         "contact_phone" => "454-344-3344",
         "company_name" => "NovaTech",
         "company_description" => "NovaTech is a leading tech firm specializing in innovative software solutions and cutting-edge technology.",
-        "company_logo" => "logos/logo-novatech.png",
+        "company_logo" => "logo-algorix.png",
         "company_website" => "https://novatech.com"
     ],
     [
@@ -38,7 +38,7 @@ return [
         "contact_phone" => "212-555-6789",
         "company_name" => "Pulse Marketing",
         "company_description" => "Pulse Marketing is a dynamic marketing agency focused on delivering innovative marketing strategies and results-driven solutions.",
-        "company_logo" => "logos/logo-pulse-marketing.png",
+        "company_logo" => "logo-bitwave.png",
         "company_website" => "https://pulsemarketing.com"
     ],
     [
@@ -58,7 +58,7 @@ return [
         "contact_phone" => "444-555-5555",
         "company_name" => "Data Insights",
         "company_description" => "Data Insights is a prominent data analytics company providing insightful data solutions and analytics for better decision-making.",
-        "company_logo" => "logos/logo-data-insights.png",
+        "company_logo" => "logo-digital-media.png",
         "company_website" => "https://datainsights.com"
     ],
     [
@@ -78,7 +78,7 @@ return [
         "contact_phone" => "454-344-3344",
         "company_name" => "CloudOps",
         "company_description" => "CloudOps is a leading provider of cloud infrastructure and DevOps services.",
-        "company_logo" => "logos/logo-cloudops.png",
+        "company_logo" => "logo-nextgen.png",
         "company_website" => "https://cloudops.com"
     ],
     [
@@ -98,7 +98,7 @@ return [
         "contact_phone" => "212-555-6789",
         "company_name" => "SecureNet",
         "company_description" => "SecureNet is a leading provider of cybersecurity services and solutions.",
-        "company_logo" => "logos/logo-securenets.png",
+        "company_logo" => "logo-pink-pig.png",
         "company_website" => "https://securenets.com"
     ],
     [
@@ -118,7 +118,7 @@ return [
         "contact_phone" => "617-555-1234",
         "company_name" => "AI Solutions",
         "company_description" => "AI Solutions is a leading provider of AI solutions and services.",
-        "company_logo" => "logos/logo-aisolutions.png",
+        "company_logo" => "logo-quantumcode.png",
         "company_website" => "https://aisolutions.com"
     ],
     [
@@ -138,7 +138,7 @@ return [
         "contact_phone" => "206-555-5678",
         "company_name" => "DataCorp",
         "company_description" => "DataCorp is a leading provider of data analytics and science services.",
-        "company_logo" => "logos/logo-datacorp.png",
+        "company_logo" => "logo-shield.png",
         "company_website" => "https://datacorp.com"
     ],
     [
@@ -158,7 +158,7 @@ return [
         "contact_phone" => "512-555-9012",
         "company_name" => "DevHub",
         "company_description" => "DevHub is a leading provider of web development services.",
-        "company_logo" => "logos/logo-devhub.png",
+        "company_logo" => "logo-sparkle.png",
         "company_website" => "https://devhub.com"
     ],
     [
@@ -178,7 +178,7 @@ return [
         "contact_phone" => "303-555-1111",
         "company_name" => "CloudScape",
         "company_description" => "CloudScape is a leading provider of cloud architecture and consulting services.",
-        "company_logo" => "logos/logo-cloudscape.png",
+        "company_logo" => "logo-tec-solutions.png",
         "company_website" => "https://cloudscape.com"
     ],
 ];
