@@ -39,7 +39,7 @@
             <x-inputs.text-area label="Company Description" id="company_description" name="company_description"
                 placeholder="Company Description" />
             <x-inputs.text id="company_website" name="company_website" label="Company Website"
-                placeholder="Enter website" />
+                placeholder="Enter website" type="url" />
             <x-inputs.text id="contact_phone" name="contact_phone" label="Contact Phone" placeholder="Enter phone" />
             <x-inputs.text id="contact_email" name="contact_email" type="email" label="Contact Email"
                 placeholder="Email where you want to receive applications" />
