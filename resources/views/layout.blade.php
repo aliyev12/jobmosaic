@@ -14,6 +14,7 @@
         integrity="sha512-zMm7+ZQ8AZr1r3W8Z8lDATkH05QG5Gm2xc6MlsCdBz9l6oE8Y7IXByMgSm/rdRQrhuHt99HAYfMljBOEZ68q5A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href={{ asset('css/styles.css') }}>
+    <script src="//unpkg.com/alpinejs" defer></script>
     <title>{{ $title ?? 'Job Mosaic | Get Your Dream Job' }}</title>
 </head>
 
@@ -24,6 +25,13 @@
         <x-top-banner />
     @endif
     <main class="container mx-auto p-4 mt-4">
+        {{-- Display alert messages --}}
+        @if (session('success'))
+            <x-alert type="success" message="{{ session('success') }}" />
+        @endif
+        @if (session('error'))
+            <x-alert type="error" message="{{ session('error') }}" />
+        @endif
         {{ $slot }}
     </main>
     <script>

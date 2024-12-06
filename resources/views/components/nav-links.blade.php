@@ -11,9 +11,7 @@
 @endphp
 
 @if ($mobile)
-    <nav id="mobile-menu" class="md:hidden  text-white mt-5 pb-4 space-y-2">
-
-
+    <nav x-show="open" @click.away="open = false" id="mobile-menu" class="md:hidden  text-white mt-5 pb-4 space-y-2">
         <x-nav-link url="{{ $home['url'] }}" route="/" :mobile="true">{{ $home['title'] }}</x-nav-link>
         <x-nav-link url="{{ $jobs['url'] }}" route="jobs" :mobile="true">{{ $jobs['title'] }}</x-nav-link>
         <x-nav-link url="{{ $savedJobs['url'] }}" route="saved-jobs"
