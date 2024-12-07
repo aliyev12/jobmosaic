@@ -75,7 +75,7 @@
                 Company Info
             </h3>
             @if ($job->company_logo)
-                <img src="/images/logos/{{ $job->company_logo }}" alt="Ad"
+                <img src="/storage/logos/{{ $job->company_logo }}" alt="Ad"
                     class="w-full rounded-lg mb-4 m-auto" />
             @endif
             <h4 class="text-lg font-bold">{{ $job->company_name }}</h4>
