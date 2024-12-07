@@ -44,11 +44,11 @@ class Header extends Component
             ],
             'sign_in' => [
                 'title' => 'Sign in',
-                'url' => '/sign-in',
+                'url' => '/login',
             ],
             'sign_up' => [
                 'title' => 'Sign up',
-                'url' => '/sign-up',
+                'url' => '/register',
             ],
         ];
         return view('components.header', compact('navContent'));

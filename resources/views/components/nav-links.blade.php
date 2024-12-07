@@ -18,9 +18,9 @@
             :mobile="true">{{ $savedJobs['title'] }}</x-nav-link>
         <x-nav-link url="{{ $dashboard['url'] }}" route="dashboard" :mobile="true"
             icon="pie-chart">{{ $dashboard['title'] }}</x-nav-link>
-        <x-nav-link url="{{ $signIn['url'] }}" route="sign-in" :mobile="true"
+        <x-nav-link url="{{ $signIn['url'] }}" route="login" :mobile="true"
             icon="log-in">{{ $signIn['title'] }}</x-nav-link>
-        <x-nav-link url="{{ $signUp['url'] }}" route="sign-up" :mobile="true">{{ $signUp['title'] }}</x-nav-link>
+        <x-nav-link url="{{ $signUp['url'] }}" route="register" :mobile="true">{{ $signUp['title'] }}</x-nav-link>
         <x-button-link url="{{ $addJob['url'] }}" icon="plus"
             :mobile="true">{{ $addJob['title'] }}</x-button-link>
     </nav>
@@ -32,7 +32,7 @@
         <x-nav-link url="{{ $savedJobs['url'] }}" route="saved-jobs">{{ $savedJobs['title'] }}</x-nav-link>
         <x-nav-link url="{{ $dashboard['url'] }}" route="dashboard"
             icon="pie-chart">{{ $dashboard['title'] }}</x-nav-link>
-        <x-nav-link url="{{ $signIn['url'] }}" route="sign-in" icon="log-in">{{ $signIn['title'] }}</x-nav-link>
-        <x-nav-link url="{{ $signUp['url'] }}" route="sign-up">{{ $signUp['title'] }}</x-nav-link>
+        <x-nav-link url="{{ $signIn['url'] }}" route="login" icon="log-in">{{ $signIn['title'] }}</x-nav-link>
+        <x-nav-link url="{{ $signUp['url'] }}" route="register">{{ $signUp['title'] }}</x-nav-link>
     </nav>
 @endif
