@@ -17,6 +17,9 @@ class JobSeeder extends Seeder
         // Load job listings from file
         $jobListings = include database_path('seeders/data/job_listings.php');
 
+        // Get test user ID
+        $testUserId = User::where('email', 'test@test.com')->value('id');
+
         // Get user IDs from user model
         $userIds = User::pluck('id')->toArray();
 
