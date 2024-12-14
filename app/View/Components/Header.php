@@ -36,7 +36,7 @@ class Header extends Component
             ],
             'saved_jobs' => [
                 'title' => 'Saved jobs',
-                'url' => '/jobs/saved',
+                'url' => '/bookmarks',
             ],
             'dashboard' => [
                 'title' => 'Dashboard',

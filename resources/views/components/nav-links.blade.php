@@ -31,7 +31,7 @@
     <x-nav-link url="{{ $home['url'] }}" route="/">{{ $home['title'] }}</x-nav-link>
     <x-nav-link url="{{ $jobs['url'] }}" route="jobs">{{ $jobs['title'] }}</x-nav-link>
     @auth
-      <x-nav-link url="{{ $savedJobs['url'] }}" route="saved-jobs">{{ $savedJobs['title'] }}</x-nav-link>
+      <x-nav-link url="{{ $savedJobs['url'] }}" route="bookmarks">{{ $savedJobs['title'] }}</x-nav-link>
       {{-- <x-nav-link url="{{ $dashboard['url'] }}" route="dashboard"
                 icon="pie-chart">{{ $dashboard['title'] }}</x-nav-link> --}}
       <x-logout-button />
