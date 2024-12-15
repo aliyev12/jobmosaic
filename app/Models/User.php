@@ -55,7 +55,10 @@ class User extends Authenticatable
         return $this->hasMany(Job::class);
     }
 
-    // Relation to bookmarks
+    /**
+     * Retrieve bookmarked jobs
+     * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Job[] $bookmarkedJobs
+     */
     public function bookmarkedJobs(): BelongsToMany
     {
         return $this->belongsToMany(Job::class, 'job_user_bookmarks')->withTimestamps();
