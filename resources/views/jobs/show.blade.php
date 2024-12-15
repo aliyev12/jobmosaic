@@ -70,10 +70,21 @@
 
 
           <div x-data="{ open: false }">
-            <button @click="open = true"
-              class="block w-full text-center px-5 py-2.5 shadow-sm rounded border text-base font-medium cursor-pointer text-indigo-700 bg-indigo-100 hover:bg-indigo-200">
-              Apply Now
-            </button>
+            @if ($existingApplication)
+              <p class="my-5">
+                You have already applied to this job
+              </p>
+              <button
+                class="block w-full text-center px-5 py-2.5 shadow-sm rounded border text-base font-medium pointer-events-none text-white bg-gray-400 hover:bg-gray-500">
+                Apply Now
+              </button>
+            @else
+              <button @click="open = true"
+                class="block w-full text-center px-5 py-2.5 shadow-sm rounded border text-base font-medium cursor-pointer text-indigo-700 bg-indigo-100 hover:bg-indigo-200">
+                Apply Now
+              </button>
+            @endif
+
 
             <div x-cloak x-show="open" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
               <div @click.away="open = false" class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">

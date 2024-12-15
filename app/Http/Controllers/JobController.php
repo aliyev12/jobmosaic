@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Job;
-use Illuminate\Http\Request;
+use App\Models\Applicant;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -75,7 +76,11 @@ class JobController extends Controller
     // @route GET /jobs/{$id}
     public function show(Job $job): View
     {
-        return view('jobs.show')->with('job', $job);
+        $existingApplication = Applicant::where('job_id', $job->id)
+            ->where('user_id', auth()->id())
+            ->exists();
+
+        return view('jobs.show', compact('job', 'existingApplication'));
     }
 
     // @desc Show edit job form
