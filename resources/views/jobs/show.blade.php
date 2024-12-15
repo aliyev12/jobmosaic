@@ -69,7 +69,7 @@
           </p>
 
 
-          <div x-data="{ open: false }">
+          <div x-data="{ open: false }" id="applicant-form">
             @if ($existingApplication)
               <p class="my-5">
                 You have already applied to this job
@@ -115,7 +115,7 @@
 
       </div>
 
-      <div class="bg-white p-6 rounded-lg shadow-md mt-6">
+      <div class="bg-white p-6 rounded-lg shadow-md mt-6 map-container">
         <div id="map"></div>
       </div>
     </section>
@@ -164,3 +164,44 @@
     </aside>
   </div>
 </x-layout>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+  const city = '{{ $job->city }}';
+  const state = '{{ $job->state }}';
+  const address = city + ', ' + state;
+
+  const API_KEY = '{{ env('OPEN_CAGE_KEY') }}';
+
+  fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(address)}&key=${API_KEY}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log('data = ', data);
+      if (data?.results?.length) {
+        const {
+          lat,
+          lng
+        } = data.results[0].geometry;
+        console.log(`Latitude: ${lat}, Longitude: ${lng}`);
+
+        // Add the location to your Leaflet map
+        const map = L.map('map').setView([lat, lng], 13);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add a marker to the map
+        const marker = L.marker([lat, lng]).addTo(map);
+      } else {
+        const mapContainer = document.querySelector('.map-container')
+        if (mapContainer) {
+          mapContainer.style.display = 'none';
+        }
+      }
+    })
+    .catch(error => console.error('Error:', error));
+</script>
