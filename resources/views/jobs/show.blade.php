@@ -173,18 +173,14 @@
   const state = '{{ $job->state }}';
   const address = city + ', ' + state;
 
-  const API_KEY = '{{ env('OPEN_CAGE_KEY') }}';
-
-  fetch(`https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(address)}&key=${API_KEY}`)
+  fetch(`/geocode?address=${encodeURIComponent(address)}`)
     .then(response => response.json())
     .then(data => {
-      console.log('data = ', data);
-      if (data?.results?.length) {
+      if (data?.results?.length && data?.results[0] && data?.results[0]?.geometry) {
         const {
           lat,
           lng
         } = data.results[0].geometry;
-        console.log(`Latitude: ${lat}, Longitude: ${lng}`);
 
         // Add the location to your Leaflet map
         const map = L.map('map').setView([lat, lng], 13);
