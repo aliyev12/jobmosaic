@@ -97,15 +97,26 @@
           <i class="mr-3" data-feather="info"></i> You must be logged in to bookmark a job
         </p>
       @else
+        <form method="POST"
+          action="{{ auth()->user()->bookmarkedJobs()->where('job_id', $job->id)->exists()? route('bookmarks.destroy', $job->id): route('bookmarks.store', $job->id) }}"
+          class="mt-3">
+          @csrf
+          @if (auth()->user()->bookmarkedJobs()->where('job_id', $job->id)->exists())
+            @method('DELETE')
+            <button type="submit"
+              class="bg-red-500 hover:bg-red-600 cursor-pointer text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center">
+              <i class="mr-3" data-feather="bookmark"></i> Remove Bookmark
+            </button>
+          @else
+            <button type="submit"
+              class="bg-blue-500 hover:bg-blue-600 cursor-pointer text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center">
+              <i class="mr-3" data-feather="bookmark"></i> Bookmark Listing
+            </button>
+          @endif
+        </form>
       @endguest
 
-      <form method="POST" action="{{ route('bookmarks.store', $job->id) }}" class="mt-3">
-        @csrf
-        <button disabled="{{ !Auth::check() }}" type="submit"
-          class="{{ !Auth::check() ? 'pointer-events-none bg-gray-300' : 'bg-blue-500 hover:bg-blue-600 cursor-pointer' }}  text-white font-bold w-full py-2 px-4 rounded-full flex items-center justify-center">
-          <i class="mr-3" data-feather="bookmark"></i> Bookmark Listing
-        </button>
-      </form>
+
     </aside>
   </div>
 </x-layout>
