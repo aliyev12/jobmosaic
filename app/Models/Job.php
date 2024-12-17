@@ -19,7 +19,7 @@ class Job extends Model
     // Relation to user
     public function user(): BelongsTo
     {
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     // Relation to bookmarks
