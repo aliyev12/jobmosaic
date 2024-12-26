@@ -14,6 +14,7 @@
         integrity="sha512-zMm7+ZQ8AZr1r3W8Z8lDATkH05QG5Gm2xc6MlsCdBz9l6oE8Y7IXByMgSm/rdRQrhuHt99HAYfMljBOEZ68q5A=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href={{ asset('css/styles.css') }}>
+    <link rel="icon" , type="image/svg+xml" href="/favicon.svg">
     <script src="//unpkg.com/alpinejs" defer></script>
     <title>{{ $title ?? 'Job Mosaic | Get Your Dream Job' }}</title>
 </head>
