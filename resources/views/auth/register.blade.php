@@ -1,7 +1,10 @@
 <x-layout>
     <div class="bg-white rounded-lg shadow-md w-full md:max-w-xl mx-auto mt-12 p-8 py-12">
         <h2 class="text-4xl text-center font-bold mb-4">Register</h2>
-        <form method="POST" action="{{ route('register.store') }}">
+        <p class="mt-4 text-gray-500">Thank you for visiting this page. This site has limited database space so you would
+            need to request an account first. Please <a target="_blank" href="https://www.aaliyev.com/contact"
+                class="text-blue-900">contact me</a> to request an account. Thank you!</p>
+        <form class="pointer-events-none" method="POST" action="{{ route('register.store') }}">
             @csrf
             <x-inputs.text id="name" name="name" placeholder="Full name" />
             <x-inputs.text id="email" name="email" type="email" placeholder="Email address" />
