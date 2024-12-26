@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-    app:
+    jobmosaic_app:
         build:
             context: .
             dockerfile: Dockerfile
@@ -13,9 +13,9 @@ services:
         networks:
             - aa_network
         depends_on:
-            - db
+            - jobmosaic_db
 
-    nginx:
+    jobmosaic_nginx:
         image: nginx:alpine
         container_name: jobmosaic_nginx
         restart: unless-stopped
@@ -27,9 +27,9 @@ services:
         networks:
             - aa_network
         depends_on:
-            - app
+            - jobmosaic_app
 
-    db:
+    jobmosaic_db:
         image: postgres:15-alpine
         container_name: jobmosaic_db
         restart: unless-stopped
