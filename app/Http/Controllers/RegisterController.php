@@ -30,9 +30,12 @@ class RegisterController extends Controller
         // Hash password
         $validatedData['password'] = Hash::make($validatedData['password']);
 
-        // Create user
-        $user = User::create($validatedData);
 
-        return redirect()->route('login')->with('success', 'You are registered and can log in');
+        // // TODO : Temporary disable user creation
+        // Create user
+        // $user = User::create($validatedData);
+
+        // return redirect()->route('login')->with('success', 'You are registered and can log in');
+        return redirect()->route('home')->with('error', 'Thank you for trying to register, but registration is currently disabled. Please email me to gain access: aaa7c4@gmail.com :)');
     }
 }
