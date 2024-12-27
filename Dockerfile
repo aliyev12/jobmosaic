@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     zip \
     unzip \
-    libpq-dev  # Required for PostgreSQL
+    libpq-dev  # Required for PostgreSQL \
+    nodejs npm # Add Node.js and npm
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -22,3 +23,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Set working directory
 WORKDIR /var/www
+
+# Install project dependencies (if applicable)
+COPY package*.json ./
+RUN npm install
