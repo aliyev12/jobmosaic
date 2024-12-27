@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(TestUserSeeder::class);
         $this->call(RandonUserSeeder::class);
-        $this->call(JobSeeder::class);
+        // Disable users seeding
+        // $this->call(JobSeeder::class);
         $this->call(BookmarkSeeder::class);
     }
 }
