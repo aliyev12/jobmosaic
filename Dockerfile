@@ -15,17 +15,17 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www
 
+RUN composer install
+RUN php artisan migrate
+RUN php artisan db:seed
+RUN php artisan storage:link
+
 # Install project dependencies (if applicable)
 COPY package*.json ./
 RUN npm install
 
 # Install Vite globally
-RUN npm install -g vite
+RUN npm install vite
 
 # Build Vite assets
 RUN npm run build
-
-RUN composer install
-RUN php artisan migrate
-RUN php artisan db:seed
-RUN php artisan storage:link
