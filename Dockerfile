@@ -24,3 +24,8 @@ RUN npm install -g vite
 
 # Build Vite assets
 RUN npm run build
+
+RUN composer install
+RUN php artisan migrate
+RUN php artisan db:seed
+RUN php artisan storage:link
