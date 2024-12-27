@@ -1,0 +1,21 @@
+{
+  "folders": [
+	{
+		"name": "jobmosaic",
+		"path": "."
+	},
+	{
+		"name": "_theme_files",
+		"path": "../../Downloads/_theme_files"
+	}
+],
+  "settings": {
+    "cSpell.words": ["endphp"],
+    "editor.fontSize": 14,
+    "scm.inputFontSize": 10,
+    "debug.console.fontSize": 10,
+    "terminal.integrated.fontSize": 10,
+    "bladeFormatter.format.indentSize": 2,
+    "workbench.tree.indent": 6
+  }
+}

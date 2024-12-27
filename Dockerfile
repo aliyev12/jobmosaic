@@ -18,3 +18,9 @@ WORKDIR /var/www
 # Install project dependencies (if applicable)
 COPY package*.json ./
 RUN npm install
+
+# Install Vite globally
+RUN npm install -g vite
+
+# Build Vite assets
+RUN npm run build
