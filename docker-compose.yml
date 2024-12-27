@@ -11,7 +11,7 @@ services:
         volumes:
             - ./:/var/www
         networks:
-            - jobmosaic_network
+            - aa_network
         depends_on:
             - db
 
@@ -25,7 +25,7 @@ services:
             - ./:/var/www
             - ./docker/nginx/conf.d:/etc/nginx/conf.d/
         networks:
-            - jobmosaic_network
+            - aa_network
         depends_on:
             - app
 
@@ -42,10 +42,10 @@ services:
         ports:
             - "5432:5432"
         networks:
-            - jobmosaic_network
+            - aa_network
 
 networks:
-    jobmosaic_network:
+    aa_network:
         driver: bridge
 
 volumes:
