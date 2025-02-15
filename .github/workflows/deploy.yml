@@ -117,13 +117,14 @@ jobs:
       #         sleep 10  # Wait for 10 seconds before checking again
       #       fi
       #     done
+      #   echo "Running Laravel migrations..."
+      # docker compose exec -T jobmosaic_app php artisan migrate --force
 
       - name: Run Laravel and NPM commands
         run: |
           ssh root@${{ env.SSH_HOST }} << 'EOF'
           set -e  # Exit immediately if a command exits with a non-zero status
-          echo "Running Laravel migrations..."
-          docker compose exec -T jobmosaic_app php artisan migrate --force
+
           echo "Clearing cache..."
           docker compose exec -T jobmosaic_app php artisan config:cache
           docker compose exec -T jobmosaic_app php artisan route:cache
