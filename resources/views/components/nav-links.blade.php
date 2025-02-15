@@ -18,8 +18,8 @@
         @auth
             <x-nav-link url="{{ $savedJobs['url'] }}" route="saved-jobs"
                 :mobile="true">{{ $savedJobs['title'] }}</x-nav-link>
-            <x-nav-link url="{{ $dashboard['url'] }}" route="dashboard" :mobile="true"
-                icon="pie-chart">{{ $dashboard['title'] }}</x-nav-link>
+            <x-nav-link url="{{ $dashboard['url'] }}" route="dashboard"
+                :mobile="true">{{ $dashboard['title'] }}</x-nav-link>
             <x-logout-button />
             <x-button-link url="{{ $addJob['url'] }}" icon="plus"
                 :mobile="true">{{ $addJob['title'] }}</x-button-link>
@@ -44,7 +44,7 @@
                             class="w-10 h-10 rounded-full">
                     @else
                         <img src="{{ asset('storage/avatars/default-avatar.png') }}" alt="{{ Auth::user()->name }}"
-                            class="w-10 h-10 rounded-full">
+                            class="w-10 h-10 rounded-full object-cover">
                     @endif
                 </a>
             </div>

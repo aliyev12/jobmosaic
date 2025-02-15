@@ -15,7 +15,7 @@
     </div>
     <div id="file-preview" class="mt-2" style="display: none;">
         <span id="file-name" class="text-gray-700"></span>
-        <embed id="file-preview-embed" type="application/pdf" width="100%" height="500px" />
+        <img id="file-preview-embed" src="" alt="Preview" class="w-full" />
         <button type="button" onclick="removeImage()" class="ml-2 text-red-500">
             <i class="fas fa-trash-alt"></i>
         </button>
