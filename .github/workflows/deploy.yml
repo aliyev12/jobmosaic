@@ -47,31 +47,35 @@ jobs:
 
       - name: Deploy to Hetzner
         run: |
-          ssh root@${{ env.SSH_HOST }} "bash -s" << 'ENDSSH'
+          PROJECT_PATH="${{ env.PROJECT_PATH }}"
+          DOCKER_PATH="${{ env.DOCKER_PATH }}"
+          REPO_URL="${{ env.REPO_URL }}"
+
+          ssh root@${{ env.SSH_HOST }} "bash -s" << ENDSSH
             set -e
 
             echo "Starting deployment..."
 
             # Create project directory if it doesn't exist
-            mkdir -p $PROJECT_PATH
+            mkdir -p "${PROJECT_PATH}"
 
             # Check if git repository exists
-            if [ ! -d "$PROJECT_PATH/.git" ]; then
+            if [ ! -d "${PROJECT_PATH}/.git" ]; then
               echo "Initializing new repository..."
               # Remove directory contents if any exist
-              rm -rf $PROJECT_PATH/*
+              rm -rf "${PROJECT_PATH}"/*
               # Clone the repository
-              git clone $REPO_URL $PROJECT_PATH
-              cd $PROJECT_PATH
+              git clone "${REPO_URL}" "${PROJECT_PATH}"
+              cd "${PROJECT_PATH}"
             else
               echo "Repository exists, pulling latest changes..."
-              cd $PROJECT_PATH
+              cd "${PROJECT_PATH}"
               git fetch --all
               git reset --hard origin/main
             fi
 
             # Navigate to docker directory
-            cd $DOCKER_PATH
+            cd "${DOCKER_PATH}"
 
             # Rebuild and restart containers
             docker compose down
@@ -90,7 +94,7 @@ jobs:
             docker compose exec -T jobmosaic_app npm run build
 
             echo "Deployment completed successfully!"
-          ENDSSH
+ENDSSH
 
       - name: Verify Deployment
         run: |
