@@ -26,10 +26,10 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache && \
     chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
 # Run Laravel artisan commands
-RUN php artisan storage:link
-RUN php artisan config:cache
-RUN php artisan route:cache
-RUN php artisan view:cache
+# RUN php artisan storage:link
+# RUN php artisan config:cache
+# RUN php artisan route:cache
+# RUN php artisan view:cache
 
 # Install project dependencies (if applicable)
 # COPY package*.json ./
@@ -40,6 +40,13 @@ RUN npm install vite
 
 # Build Vite assets
 RUN npm run build
+
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+# Use entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Command to start PHP-FPM server
 CMD ["php-fpm"]
