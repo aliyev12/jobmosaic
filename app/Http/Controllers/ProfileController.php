@@ -20,7 +20,7 @@ class ProfileController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email',
-            'avatar' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048'
+            'avatar' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:5120'
         ]);
 
         // Get user name and email
@@ -29,6 +29,11 @@ class ProfileController extends Controller
 
         // Handle avatar upload
         if ($request->hasFile('avatar')) {
+            // Check if the file size exceeds the limit
+            if ($request->file('avatar')->getSize() > 5 * 1024 * 1024) { // 5MB limit
+                return redirect()->back()->withErrors(['avatar' => 'The uploaded avatar exceeds the maximum size of 5MB.']);
+            }
+
             // Delete old avatar if exists
             if ($user->avatar) {
                 Storage::delete('public/' . $user->avatar);
