@@ -13,6 +13,10 @@ export default {
             fontFamily: {
                 sans: ["Poppins", ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                background: "var(--background)",
+                foreground: "var(--foreground)",
+            },
         },
     },
     plugins: [],

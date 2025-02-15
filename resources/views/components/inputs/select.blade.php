@@ -5,7 +5,7 @@
         <label class="block text-gray-700" for="{{ $id }}">{{ $label }}</label>
     @endif
     <select id="{{ $id }}" name="{{ $name }}"
-        class="w-full px-4 py-2 border rounded focus:outline-none @error($name) border-red-500 @enderror">
+        class="w-full px-4 py-2 border border-slate-500 rounded focus:outline-none text-foreground @error($name) border-red-500 @enderror">
         @foreach ($options as $optionValue => $optionLabel)
             <option value="{{ $optionValue }}" {{ old($name, $value) == $optionValue ? 'selected' : '' }}>
                 {{ $optionLabel }}

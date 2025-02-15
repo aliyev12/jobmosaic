@@ -1,8 +1,8 @@
 @props([
     'url' => '/',
     'icon' => null,
-    'bgClass' => 'bg-indigo-700',
-    'hoverClass' => 'bg-indigo-800',
+    'bgClass' => 'bg-slate-500',
+    'hoverClass' => 'bg-slate-600',
     'textClass' => 'text-white',
     'mobile' => null,
     'variant' => null,

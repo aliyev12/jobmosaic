@@ -1,9 +1,9 @@
 @props(['title' => 'Start Searching for Jobs'])
 
-<section class="hero relative bg-cover bg-center bg-no-repeat h-80 flex items-center">
-  <div class="overlay"></div>
-  <div class="container mx-auto text-center z-10 flex items-center flex-col">
-    <h2 class="text-4xl md:text-5xl text-white font-bold mb-8">{{ $title }}</h2>
-    <x-search />
-  </div>
+<section class="hero relative bg-cover bg-center bg-no-repeat h-80 flex items-center px-8">
+    <div class="overlay"></div>
+    <div class="container mx-auto text-center z-10 flex items-center flex-col">
+        <h2 class="text-4xl md:text-5xl text-white font-bold mb-8">{{ $title }}</h2>
+        <x-search />
+    </div>
 </section>
