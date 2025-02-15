@@ -126,8 +126,9 @@ jobs:
           echo "Current directory: $(pwd)"
           echo "Listing all running containers..."
           docker container ls
+          echo "checking health..."
+          docker inspect --format='{{.State.Health.Status}}' jobmosaic_app
           echo "Running Laravel migrations..."
-          sleep 60
           docker compose exec -T jobmosaic_app php artisan migrate --force
           echo "Clearing cache..."
           docker compose exec -T jobmosaic_app php artisan config:cache
