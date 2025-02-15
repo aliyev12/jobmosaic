@@ -106,14 +106,14 @@ jobs:
           echo "Deployment completed successfully!"
           EOT
 
-      - name: Wait for jobmosaic_app to be ready
+      - name: Wait for jobmosaic_app to be healthy
         run: |
-          for i in {1..15}; do  # Increase the number of retries
-            if ssh root@${{ env.SSH_HOST }} "docker compose ps | grep jobmosaic_app | grep 'Up'"; then
-              echo "jobmosaic_app is running."
+          for i in {1..15}; do
+            if ssh root@${{ env.SSH_HOST }} "cd /root/hetzner-hosting && docker inspect --format='{{.State.Health.Status}}' jobmosaic_app" | grep "healthy"; then
+              echo "jobmosaic_app is healthy."
               break
             else
-              echo "Waiting for jobmosaic_app to start..."
+              echo "Waiting for jobmosaic_app to become healthy..."
               sleep 10  # Wait for 10 seconds before checking again
             fi
           done
