@@ -25,8 +25,16 @@ class JobController extends Controller
 
     // @desc Show create job form
     // @route GET /jobs/create
-    public function create(): View
+    public function create(): RedirectResponse|View
     {
+        // Check if user has exceeded job creation limit
+        $userJobsCount = Job::where('user_id', auth()->id())->count();
+        if ($userJobsCount >= 5) {
+            // Redirect to jobs index if limit is exceeded
+            return redirect()->route('jobs.index')->with('error', 'You have exceeded the maximum number of job listings you can create.');
+        }
+
+        // Return the view for creating a job if limit is not exceeded
         return view('jobs.create');
     }
 
@@ -34,6 +42,12 @@ class JobController extends Controller
     // @route POST /jobs
     public function store(Request $request): RedirectResponse
     {
+        // Check if user has exceeded job creation limit
+        $userJobsCount = Job::where('user_id', auth()->id())->count();
+        if ($userJobsCount >= 5) {
+            return redirect()->route('jobs.index')->with('error', 'You have exceeded the maximum number of job listings you can create.');
+        }
+
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',

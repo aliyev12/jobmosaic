@@ -16,6 +16,15 @@ class ApplicantController extends Controller
     public function store(Request $request, Job $job): RedirectResponse
     {
         // Check if the user has already applied
+        $existingApplicationCount = Applicant::where('job_id', $job->id)
+            ->where('user_id', auth()->id())
+            ->count();
+
+        if ($existingApplicationCount >= 5) {
+            return redirect()->back()->with('error', 'You have reached the maximum limit of 5 applications for this job.');
+        }
+
+        // Check if the user has already applied to this job
         $existingApplication = Applicant::where('job_id', $job->id)
             ->where('user_id', auth()->id())
             ->exists();

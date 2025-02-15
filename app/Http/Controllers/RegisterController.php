@@ -21,21 +21,26 @@ class RegisterController extends Controller
     // @route POST /register
     public function store(Request $request): RedirectResponse
     {
+        // Check if user limit is reached
+        if (User::count() >= 4) {
+            return redirect()->route('register')
+                ->with('error', 'Registration is currently closed as we have reached our user limit. Thank you for your interest!');
+        }
+
         $validatedData = $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|string|email|max:100|unique:users',
-            'password' => 'required|string|min:8|confirmed'
+            'password' => 'required|string|min:8|confirmed',
+            'g-recaptcha-response' => 'required|captcha',
         ]);
 
         // Hash password
         $validatedData['password'] = Hash::make($validatedData['password']);
 
-
-        // // TODO : Temporary disable user creation
         // Create user
-        // $user = User::create($validatedData);
+        $user = User::create($validatedData);
 
-        // return redirect()->route('login')->with('success', 'You are registered and can log in');
-        return redirect()->route('home')->with('error', 'Thank you for trying to register, but registration is currently disabled.');
+        return redirect()->route('login')
+            ->with('success', 'You are registered and can log in');
     }
 }

@@ -31,7 +31,7 @@
     }
 
     .button {
-        @apply px-4 pr-5 py-3 rounded-lg hover:shadow-md transition duration-300 flex items-center justify-center;
+        @apply cursor-pointer px-4 pr-5 py-3 rounded-lg hover:shadow-md transition duration-300 flex items-center justify-center;
     }
 
     .button.primary {
@@ -40,5 +40,9 @@
 
     .button.secondary {
         @apply bg-white hover:bg-gray-100 text-foreground;
+    }
+
+    .button[disabled] {
+        @apply opacity-50 cursor-not-allowed;
     }
 }

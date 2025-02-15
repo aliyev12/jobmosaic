@@ -45,9 +45,8 @@
                 placeholder="Email where you want to receive applications" />
             <x-inputs.file id="company_logo" name="company_logo" label="Company Logo" />
 
-            <button type="submit"
-                class="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 my-3 rounded focus:outline-none">
-                Save
+            <button type="submit" class="button primary">
+                <i class="mr-2" data-feather="save"></i> Save
             </button>
         </form>
     </div>
