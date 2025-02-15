@@ -108,4 +108,4 @@ jobs:
 
       - name: Verify Deployment
         run: |
-          ssh root@${{ env.SSH_HOST }} "docker compose ps"
+          ssh root@${{ env.SSH_HOST }} "cd /root/hetzner-hosting && docker compose ps"
