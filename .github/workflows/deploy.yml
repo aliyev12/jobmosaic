@@ -123,12 +123,14 @@ jobs:
           ssh root@${{ env.SSH_HOST }} << 'EOF'
           set -e  # Exit immediately if a command exits with a non-zero status
           cd "$DOCKER_PATH"
+          echo "Current directory: $(pwd)"
           echo "Running Laravel migrations..."
           docker compose exec -T jobmosaic_app php artisan migrate --force
           echo "Clearing cache..."
           docker compose exec -T jobmosaic_app php artisan config:cache
           docker compose exec -T jobmosaic_app php artisan route:cache
           docker compose exec -T jobmosaic_app php artisan view:cache
+
 
           echo "Installing NPM dependencies..."
           docker compose exec -T jobmosaic_app npm ci
