@@ -47,54 +47,63 @@ jobs:
 
       - name: Deploy to Hetzner
         run: |
-          PROJECT_PATH="${{ env.PROJECT_PATH }}"
-          DOCKER_PATH="${{ env.DOCKER_PATH }}"
-          REPO_URL="${{ env.REPO_URL }}"
+          # Debug info
+          echo "Debug: Setting up deployment variables"
+          echo "PROJECT_PATH: ${{ env.PROJECT_PATH }}"
+          echo "DOCKER_PATH: ${{ env.DOCKER_PATH }}"
+          echo "REPO_URL: ${{ env.REPO_URL }}"
 
-          ssh root@${{ env.SSH_HOST }} "bash -s" << ENDSSH
-            set -e
+          # Export variables for use in heredoc
+          export PROJECT_PATH="${{ env.PROJECT_PATH }}"
+          export DOCKER_PATH="${{ env.DOCKER_PATH }}"
+          export REPO_URL="${{ env.REPO_URL }}"
 
-            echo "Starting deployment..."
+          ssh -tt root@${{ env.SSH_HOST }} bash -s <<'EOT'
+set -e
+echo "Starting deployment..."
 
-            # Create project directory if it doesn't exist
-            mkdir -p "${PROJECT_PATH}"
+# Debug: Print working directory and variables
+pwd
+echo "PROJECT_PATH: $PROJECT_PATH"
+echo "DOCKER_PATH: $DOCKER_PATH"
 
-            # Check if git repository exists
-            if [ ! -d "${PROJECT_PATH}/.git" ]; then
-              echo "Initializing new repository..."
-              # Remove directory contents if any exist
-              rm -rf "${PROJECT_PATH}"/*
-              # Clone the repository
-              git clone "${REPO_URL}" "${PROJECT_PATH}"
-              cd "${PROJECT_PATH}"
-            else
-              echo "Repository exists, pulling latest changes..."
-              cd "${PROJECT_PATH}"
-              git fetch --all
-              git reset --hard origin/main
-            fi
+# Create project directory if it doesn't exist
+mkdir -p "$PROJECT_PATH"
 
-            # Navigate to docker directory
-            cd "${DOCKER_PATH}"
+# Check if git repository exists
+if [ ! -d "$PROJECT_PATH/.git" ]; then
+    echo "Initializing new repository..."
+    rm -rf "$PROJECT_PATH"/*
+    git clone "$REPO_URL" "$PROJECT_PATH"
+    cd "$PROJECT_PATH"
+else
+    echo "Repository exists, pulling latest changes..."
+    cd "$PROJECT_PATH"
+    git fetch --all
+    git reset --hard origin/main
+fi
 
-            # Rebuild and restart containers
-            docker compose down
-            docker compose build
-            docker compose up -d
+# Navigate to docker directory
+cd "$DOCKER_PATH"
 
-            # Wait for containers to be ready
-            sleep 10
+# Rebuild and restart containers
+docker compose down
+docker compose build
+docker compose up -d
 
-            # Run Laravel commands
-            docker compose exec -T jobmosaic_app php artisan migrate --force
-            docker compose exec -T jobmosaic_app php artisan config:cache
+# Wait for containers to be ready
+sleep 10
 
-            # Install and build frontend
-            docker compose exec -T jobmosaic_app npm ci
-            docker compose exec -T jobmosaic_app npm run build
+# Run Laravel commands
+docker compose exec -T jobmosaic_app php artisan migrate --force
+docker compose exec -T jobmosaic_app php artisan config:cache
 
-            echo "Deployment completed successfully!"
-ENDSSH
+# Install and build frontend
+docker compose exec -T jobmosaic_app npm ci
+docker compose exec -T jobmosaic_app npm run build
+
+echo "Deployment completed successfully!"
+EOT
 
       - name: Verify Deployment
         run: |
