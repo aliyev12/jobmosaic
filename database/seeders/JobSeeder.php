@@ -23,7 +23,7 @@ class JobSeeder extends Seeder
         $userIds = User::where('email', '!=', 'test@test.com')->pluck('id')->toArray();
 
         foreach ($jobListings as $index => &$listing) {
-            $listing['user_id'] = 1;
+            $listing['user_id'] = $testUserId;
             $listing['created_at'] = now();
             $listing['updated_at'] = now();
         }
