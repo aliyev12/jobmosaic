@@ -110,12 +110,16 @@ jobs:
 
       - name: Run Laravel commands
         run: |
-          ssh root@${{ env.SSH_HOST }} "docker compose exec -T jobmosaic_app php artisan migrate --force"
+          for i in {1..10}; do
+            if ssh root@${{ env.SSH_HOST }} "docker-compose exec -T jobmosaic_app php artisan migrate --force"; then
+              echo "Laravel commands executed successfully."
+              break
+            else
+              echo "Waiting for jobmosaic_app to be ready for Laravel commands..."
+              sleep 10  # Wait for 10 seconds before trying again
+            fi
+          done
 
       - name: Verify Deployment
         run: |
           ssh root@${{ env.SSH_HOST }} "docker compose ps"
-
-      - name: List running Docker containers
-        run: |
-          ssh root@${{ env.SSH_HOST }} "docker container ls"
