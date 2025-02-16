@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="h-24 px-4 mb-4 flex justify-center items-center ">
+    <div class="h-auto md:h-24 md:px-4 mb-8 md:mb-4 flex justify-center items-center ">
         <x-search />
     </div>
 
