@@ -98,6 +98,9 @@ jobs:
           echo "Deployment completed successfully!"
           EOT
 
+      - name: Wait for services to start
+        run: sleep 30 # Add a delay of 30 seconds
+
       - name: Verify Deployment
         run: |
           ssh root@${{ env.SSH_HOST }} "docker compose ps"
