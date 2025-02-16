@@ -85,7 +85,7 @@ jobs:
           docker compose up -d
 
           echo "Wait for containers to be ready"
-          sleep 30
+          sleep 60
 
           echo "Run Laravel commands"
           docker compose exec -T jobmosaic_app php artisan migrate --force
@@ -98,8 +98,21 @@ jobs:
           echo "Deployment completed successfully!"
           EOT
 
-      - name: Wait for services to start
-        run: sleep 30
+      - name: Wait for jobmosaic_app to be ready
+        run: |
+          for i in {1..10}; do
+            if ssh root@${{ env.SSH_HOST }} "docker compose ps | grep jobmosaic_app | grep 'Up'"; then
+              echo "jobmosaic_app is running."
+              break
+            else
+              echo "Waiting for jobmosaic_app to start..."
+              sleep 10  # Wait for 10 seconds before checking again
+            fi
+          done
+
+      - name: Run Laravel commands
+        run: |
+          ssh root@${{ env.SSH_HOST }} "docker compose exec -T jobmosaic_app php artisan migrate --force"
 
       - name: Verify Deployment
         run: |
