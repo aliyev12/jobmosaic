@@ -84,6 +84,25 @@ jobs:
           docker compose build
           docker compose up -d
 
+          # Pass environment variables to the container
+          export DB_CONNECTION=${{ secrets.DB_CONNECTION }}
+          export DB_HOST=${{ secrets.DB_HOST }}
+          export DB_PORT=${{ secrets.DB_PORT }}
+          export DB_DATABASE=${{ secrets.DB_DATABASE }}
+          export DB_USERNAME=${{ secrets.DB_USERNAME }}
+          export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          export MAIL_MAILER=${{ secrets.MAIL_MAILER }}
+          export MAIL_HOST=${{ secrets.MAIL_HOST }}
+          export MAIL_PORT=${{ secrets.MAIL_PORT }}
+          export MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}
+          export MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}
+          export MAIL_ENCRYPTION=${{ secrets.MAIL_ENCRYPTION }}
+          export MAIL_FROM_ADDRESS=${{ secrets.MAIL_FROM_ADDRESS }}
+          export MAIL_FROM_NAME=${{ secrets.MAIL_FROM_NAME }}
+          export OPEN_CAGE_KEY=${{ secrets.OPEN_CAGE_KEY }}
+          export NOCAPTCHA_SITEKEY=${{ secrets.NOCAPTCHA_SITEKEY }}
+          export NOCAPTCHA_SECRET=${{ secrets.NOCAPTCHA_SECRET }}
+
           echo "Deployment completed successfully!"
           EOT
 
