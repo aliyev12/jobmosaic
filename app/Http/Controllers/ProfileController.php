@@ -20,7 +20,8 @@ class ProfileController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email',
-            'avatar' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:5120'
+            'avatar' => 'nullable'
+            // 'avatar' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:5120'
         ]);
 
         // Get user name and email
