@@ -129,7 +129,7 @@ jobs:
           echo "checking health..."
           docker inspect --format='{{.State.Health.Status}}' jobmosaic_app
           echo "Running Laravel migrations..."
-          docker compose run --rm jobmosaic_app php artisan migrate --force
+          docker compose exec -T jobmosaic_app chmod -R 777 storage bootstrap/cache
 
           echo "Clearing cache..."
           docker compose exec -T jobmosaic_app php artisan config:cache
