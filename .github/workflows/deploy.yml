@@ -13,7 +13,7 @@ jobs:
       SSH_HOST: 116.203.89.77
       PROJECT_PATH: /root/hetzner-hosting/projects/jobmosaic
       DOCKER_PATH: /root/hetzner-hosting
-      REPO_URL: ${{ github.server_url }}/${{ github.repository }}.git
+      REPO_URL: git@github.com:${{ github.repository }}.git
 
     steps:
       - name: Checkout code
