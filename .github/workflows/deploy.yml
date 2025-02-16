@@ -9,17 +9,27 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      SSH_HOST: 116.203.89.77
+      PROJECT_PATH: /root/hetzner-hosting/projects/jobmosaic
+      DOCKER_PATH: /root/hetzner-hosting
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.5.3
+        uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Add host key to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ env.SSH_HOST }} >> ~/.ssh/known_hosts
+
       - name: Cache Composer Dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.composer/cache
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -27,39 +37,46 @@ jobs:
             ${{ runner.os }}-composer-
 
       - name: Cache npm Dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
 
-      - name: SSH into Hetzner Server and Deploy
+      - name: Deploy to Hetzner
         run: |
-          ssh -o StrictHostKeyChecking=no root@116.203.89.77 << 'EOF'
-          cd /root/hetzner-hosting/projects/jobmosaic
-          git pull
-          cd /root/hetzner-hosting
-          docker compose down
-          docker compose build
-          docker compose up -d
-          docker exec -it jobmosaic_app php artisan migrate --force
-          docker exec -it jobmosaic_app php artisan config:cache
-          docker exec -it jobmosaic_app npm install
-          docker exec -it jobmosaic_app npm run build
-          EOF
+          ssh root@${{ env.SSH_HOST }} "bash -s" << 'ENDSSH'
+            set -e
 
-      # - name: Send deployment notification
-      #   uses: softprops/gmail@v1
-      #   with:
-      #     to: 'your_email@example.com'
-      #     from: 'your_email@example.com'
-      #     subject: 'Deployment to Hetzner Complete'
-      #     body: 'Your deployment to Hetzner has been completed successfully.'
-      #   env:
-      #     GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
-      #     GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
-      #     GMAIL_CLIENT_ID: ${{ secrets.GMAIL_CLIENT_ID }}
-      #     GMAIL_CLIENT_SECRET: ${{ secrets.GMAIL_CLIENT_SECRET }}
-      #     GMAIL_REDIRECT_URI: ${{ secrets.GMAIL_REDIRECT_URI }}
-      #     GMAIL_REFRESH_TOKEN: ${{ secrets.GMAIL_REFRESH_TOKEN }}
+            echo "Deploying application..."
+
+            # Pull latest changes
+            cd $PROJECT_PATH
+            git pull origin main
+
+            # Navigate to docker directory
+            cd $DOCKER_PATH
+
+            # Rebuild and restart containers
+            docker compose down
+            docker compose build
+            docker compose up -d
+
+            # Wait for containers to be ready
+            sleep 10
+
+            # Run Laravel commands
+            docker compose exec -T jobmosaic_app php artisan migrate --force
+            docker compose exec -T jobmosaic_app php artisan config:cache
+
+            # Install and build frontend
+            docker compose exec -T jobmosaic_app npm ci
+            docker compose exec -T jobmosaic_app npm run build
+
+            echo "Deployment completed successfully!"
+          ENDSSH
+
+      - name: Verify Deployment
+        run: |
+          ssh root@${{ env.SSH_HOST }} "docker compose ps"
