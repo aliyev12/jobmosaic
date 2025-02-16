@@ -59,51 +59,51 @@ jobs:
           export REPO_URL="${{ env.REPO_URL }}"
 
           ssh -tt root@${{ env.SSH_HOST }} bash -s <<'EOT'
-set -e
-echo "Starting deployment..."
+          set -e
+          echo "Starting deployment..."
 
-# Debug: Print working directory and variables
-pwd
-echo "PROJECT_PATH: $PROJECT_PATH"
-echo "DOCKER_PATH: $DOCKER_PATH"
+          # Debug: Print working directory and variables
+          pwd
+          echo "PROJECT_PATH: $PROJECT_PATH"
+          echo "DOCKER_PATH: $DOCKER_PATH"
 
-# Create project directory if it doesn't exist
-mkdir -p "$PROJECT_PATH"
+          # Create project directory if it doesn't exist
+          mkdir -p "$PROJECT_PATH"
 
-# Check if git repository exists
-if [ ! -d "$PROJECT_PATH/.git" ]; then
-    echo "Initializing new repository..."
-    rm -rf "$PROJECT_PATH"/*
-    git clone "$REPO_URL" "$PROJECT_PATH"
-    cd "$PROJECT_PATH"
-else
-    echo "Repository exists, pulling latest changes..."
-    cd "$PROJECT_PATH"
-    git fetch --all
-    git reset --hard origin/main
-fi
+          # Check if git repository exists
+          if [ ! -d "$PROJECT_PATH/.git" ]; then
+              echo "Initializing new repository..."
+              rm -rf "$PROJECT_PATH"/*
+              git clone "$REPO_URL" "$PROJECT_PATH"
+              cd "$PROJECT_PATH"
+          else
+              echo "Repository exists, pulling latest changes..."
+              cd "$PROJECT_PATH"
+              git fetch --all
+              git reset --hard origin/main
+          fi
 
-# Navigate to docker directory
-cd "$DOCKER_PATH"
+          # Navigate to docker directory
+          cd "$DOCKER_PATH"
 
-# Rebuild and restart containers
-docker compose down
-docker compose build
-docker compose up -d
+          # Rebuild and restart containers
+          docker compose down
+          docker compose build
+          docker compose up -d
 
-# Wait for containers to be ready
-sleep 10
+          # Wait for containers to be ready
+          sleep 10
 
-# Run Laravel commands
-docker compose exec -T jobmosaic_app php artisan migrate --force
-docker compose exec -T jobmosaic_app php artisan config:cache
+          # Run Laravel commands
+          docker compose exec -T jobmosaic_app php artisan migrate --force
+          docker compose exec -T jobmosaic_app php artisan config:cache
 
-# Install and build frontend
-docker compose exec -T jobmosaic_app npm ci
-docker compose exec -T jobmosaic_app npm run build
+          # Install and build frontend
+          docker compose exec -T jobmosaic_app npm ci
+          docker compose exec -T jobmosaic_app npm run build
 
-echo "Deployment completed successfully!"
-EOT
+          echo "Deployment completed successfully!"
+          EOT
 
       - name: Verify Deployment
         run: |
