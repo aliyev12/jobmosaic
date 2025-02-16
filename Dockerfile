@@ -1,7 +1,7 @@
 FROM php:8.2-fpm
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y nodejs npm git curl libpng-dev libonig-dev libxml2-dev zip unzip libpq-dev netcat-traditional
+RUN apt-get update && apt-get install -y nodejs npm git curl libpng-dev libonig-dev libxml2-dev zip unzip libpq-dev
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
