@@ -76,22 +76,22 @@ jobs:
               git reset --hard origin/main
           fi
 
-          # Navigate to docker directory
+          echo "Navigate to docker directory"
           cd "$DOCKER_PATH"
 
-          # Rebuild and restart containers
+          echo "Rebuild and restart containers"
           docker compose down
           docker compose build
           docker compose up -d
 
-          # Wait for containers to be ready
-          sleep 10
+          echo "Wait for containers to be ready"
+          sleep 30
 
-          # Run Laravel commands
+          echo "Run Laravel commands"
           docker compose exec -T jobmosaic_app php artisan migrate --force
           docker compose exec -T jobmosaic_app php artisan config:cache
 
-          # Install and build frontend
+          echo "Install and build frontend"
           docker compose exec -T jobmosaic_app npm ci
           docker compose exec -T jobmosaic_app npm run build
 
@@ -99,7 +99,7 @@ jobs:
           EOT
 
       - name: Wait for services to start
-        run: sleep 30 # Add a delay of 30 seconds
+        run: sleep 30
 
       - name: Verify Deployment
         run: |
