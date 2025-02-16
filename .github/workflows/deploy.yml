@@ -124,12 +124,15 @@ jobs:
           set -e  # Exit immediately if a command exits with a non-zero status
           cd /root/hetzner-hosting
           echo "Current directory: $(pwd)"
+          echo "Listing all running containers..."
+          docker container ls
           echo "Running Laravel migrations..."
           docker compose exec -T jobmosaic_app php artisan migrate --force
           echo "Clearing cache..."
           docker compose exec -T jobmosaic_app php artisan config:cache
           docker compose exec -T jobmosaic_app php artisan route:cache
           docker compose exec -T jobmosaic_app php artisan view:cache
+
 
 
           echo "Installing NPM dependencies..."
