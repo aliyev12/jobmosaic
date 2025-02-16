@@ -84,9 +84,7 @@ jobs:
           docker compose build
           docker compose up -d
 
-          echo "Wait for containers to be ready"
-          sleep 60
-
+          echo docker container ls
           echo "Run Laravel commands"
           docker compose exec -T jobmosaic_app php artisan migrate --force
           docker compose exec -T jobmosaic_app php artisan config:cache
@@ -117,3 +115,7 @@ jobs:
       - name: Verify Deployment
         run: |
           ssh root@${{ env.SSH_HOST }} "docker compose ps"
+
+      - name: List running Docker containers
+        run: |
+          ssh root@${{ env.SSH_HOST }} "docker container ls"
