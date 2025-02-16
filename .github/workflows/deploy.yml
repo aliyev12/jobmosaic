@@ -47,25 +47,18 @@ jobs:
 
       - name: Deploy to Hetzner
         run: |
-          # Debug info
-          echo "Debug: Setting up deployment variables"
-          echo "PROJECT_PATH: ${{ env.PROJECT_PATH }}"
-          echo "DOCKER_PATH: ${{ env.DOCKER_PATH }}"
-          echo "REPO_URL: ${{ env.REPO_URL }}"
-
-          # Export variables for use in heredoc
-          export PROJECT_PATH="${{ env.PROJECT_PATH }}"
-          export DOCKER_PATH="${{ env.DOCKER_PATH }}"
-          export REPO_URL="${{ env.REPO_URL }}"
-
-          ssh -tt root@${{ env.SSH_HOST }} bash -s <<'EOT'
+          ssh root@${{ env.SSH_HOST }} \
+          PROJECT_PATH='${{ env.PROJECT_PATH }}' \
+          DOCKER_PATH='${{ env.DOCKER_PATH }}' \
+          REPO_URL='${{ env.REPO_URL }}' \
+          'bash -s' << 'EOT'
           set -e
           echo "Starting deployment..."
 
-          # Debug: Print working directory and variables
-          pwd
+          echo "Debug: Current environment"
           echo "PROJECT_PATH: $PROJECT_PATH"
           echo "DOCKER_PATH: $DOCKER_PATH"
+          echo "REPO_URL: $REPO_URL"
 
           # Create project directory if it doesn't exist
           mkdir -p "$PROJECT_PATH"
