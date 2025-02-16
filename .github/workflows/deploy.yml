@@ -13,6 +13,7 @@ jobs:
       SSH_HOST: 116.203.89.77
       PROJECT_PATH: /root/hetzner-hosting/projects/jobmosaic
       DOCKER_PATH: /root/hetzner-hosting
+      REPO_URL: ${{ github.server_url }}/${{ github.repository }}.git
 
     steps:
       - name: Checkout code
@@ -49,11 +50,25 @@ jobs:
           ssh root@${{ env.SSH_HOST }} "bash -s" << 'ENDSSH'
             set -e
 
-            echo "Deploying application..."
+            echo "Starting deployment..."
 
-            # Pull latest changes
-            cd $PROJECT_PATH
-            git pull origin main
+            # Create project directory if it doesn't exist
+            mkdir -p $PROJECT_PATH
+
+            # Check if git repository exists
+            if [ ! -d "$PROJECT_PATH/.git" ]; then
+              echo "Initializing new repository..."
+              # Remove directory contents if any exist
+              rm -rf $PROJECT_PATH/*
+              # Clone the repository
+              git clone $REPO_URL $PROJECT_PATH
+              cd $PROJECT_PATH
+            else
+              echo "Repository exists, pulling latest changes..."
+              cd $PROJECT_PATH
+              git fetch --all
+              git reset --hard origin/main
+            fi
 
             # Navigate to docker directory
             cd $DOCKER_PATH
