@@ -11,7 +11,7 @@
 
             <div class="mb-4">
                 {!! NoCaptcha::renderJs() !!}
-                {!! NoCaptcha::display() !!}
+                {!! NoCaptcha::display(['data-size' => 'compact']) !!}
             </div>
 
             <button type="submit" class="w-full button primary">
