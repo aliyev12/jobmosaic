@@ -122,7 +122,7 @@ jobs:
         run: |
           ssh root@${{ env.SSH_HOST }} << 'EOF'
           set -e  # Exit immediately if a command exits with a non-zero status
-          cd "$DOCKER_PATH"
+          cd /root/hetzner-hosting
           echo "Current directory: $(pwd)"
           echo "Running Laravel migrations..."
           docker compose exec -T jobmosaic_app php artisan migrate --force
